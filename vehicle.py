@@ -31,3 +31,25 @@ class Car(Vehicle):
 
     def trip_finished(self):
         print(self.vechile_type,self.licence_plate,'complete trip')
+
+
+class Bike(Vehicle):
+    def __init__(self, vechile_type, licence_plate, rate, owner) -> None:
+        super().__init__(vechile_type, licence_plate, rate, owner)
+
+    def start_driving(self):
+        print(self.vechile_type,self.licence_plate,'started')
+
+    def trip_finished(self):
+        print(self.vechile_type,self.licence_plate,'complete trip')
+
+
+class Cng(Vehicle):
+    def __init__(self, vechile_type, licence_plate, rate, owner) -> None:
+        super().__init__(vechile_type, licence_plate, rate, owner)
+
+    def start_driving(self):
+        print(self.vechile_type,self.licence_plate,'started')
+
+    def trip_finished(self):
+        print(self.vechile_type,self.licence_plate,'complete trip')

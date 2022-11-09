@@ -26,6 +26,24 @@ class User:
         else:
             print('invalid user')
 
+class Rider(User):
+    def __init__(self,name,email,password,location,balance):
+        self.location = location
+        self.balance = balance
+        super().__init__(name,email,password)
+
+    def set_location(self,location):
+        self.location = location
+
+    def get_location(self):
+        return self.location
+
+    def request_trip(self,destination):
+        pass
+    
+    def start_trip(self,fare):
+        self.balance -= fare
+
 
 hero = User('Hero Alom', "hero@mail.com", '123')
 

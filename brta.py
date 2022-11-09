@@ -15,3 +15,9 @@ class BRTA:
             print("You failed")
             return False
     
+    def validate_licence(self,email,licence):
+        for key,val in enumerate(self.__license):
+            if key == email and val == licence:
+                return True
+            else:
+                return False

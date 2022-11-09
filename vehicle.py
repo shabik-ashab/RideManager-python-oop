@@ -11,6 +11,7 @@ class Vehicle:
         self.rate = rate
         self.driver = owner
         self.licence_plate = licence_plate
+        self.status = 'avilable'
         self.speed = self.speed[vechile_type]
 
     @abstractmethod
@@ -27,9 +28,11 @@ class Car(Vehicle):
         super().__init__(vechile_type, licence_plate, rate, owner)
 
     def start_driving(self):
+        self.status = 'unavilable'
         print(self.vechile_type,self.licence_plate,'started')
 
     def trip_finished(self):
+        self.status = 'avilable'
         print(self.vechile_type,self.licence_plate,'complete trip')
 
 
@@ -38,9 +41,11 @@ class Bike(Vehicle):
         super().__init__(vechile_type, licence_plate, rate, owner)
 
     def start_driving(self):
+        self.status = 'unavilable'
         print(self.vechile_type,self.licence_plate,'started')
 
     def trip_finished(self):
+        self.status = 'avilable'
         print(self.vechile_type,self.licence_plate,'complete trip')
 
 
@@ -49,7 +54,9 @@ class Cng(Vehicle):
         super().__init__(vechile_type, licence_plate, rate, owner)
 
     def start_driving(self):
+        self.status = 'unavilable'
         print(self.vechile_type,self.licence_plate,'started')
 
     def trip_finished(self):
+        self.status = 'avilable'
         print(self.vechile_type,self.licence_plate,'complete trip')

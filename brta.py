@@ -16,7 +16,7 @@ class BRTA:
             return False
     
     def validate_licence(self,email,licence):
-        for key,val in enumerate(self.__license):
+        for key,val in self.__license.items():
             if key == email and val == licence:
                 return True
             else:

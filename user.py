@@ -70,3 +70,9 @@ class Driver(User):
 hero = User('Hero Alom', "hero@mail.com", '123')
 
 hero.log_in('hero@mail.com', '1234')
+
+anik = Driver('anik', 'anik@mail', '1234',54,4556)
+
+res = license_authority.validate_licence(anik.email,anik.license)
+print(res)
+anik.take_driving_test()

@@ -45,6 +45,17 @@ class Rider(User):
         self.balance -= fare
 
 
+class Driver(User):
+    def __init__(self, name, email, password, location, license):
+        super().__init__(name, email, password)
+        self.location = location
+        self.license = license
+        self.earning = 0
+
+    def start_trip(self, destination,fare):
+        self.earning += fare
+        self.location = destination
+
 hero = User('Hero Alom', "hero@mail.com", '123')
 
 hero.log_in('hero@mail.com', '1234')

@@ -1,6 +1,8 @@
 import hashlib
 
 from brta import BRTA
+from vehicle import Car,Cng,Bike
+from ride_manager import uber
 
 license_authority = BRTA()
 
@@ -62,6 +64,20 @@ class Driver(User):
         if res:
             self.license = res
             self.valid_driver = True
+
+    def register_vehicle(self,vehicle_type,licence_plate,rate):
+        if self.valid_driver:
+            if vehicle_type == 'car':
+                new_vehicle = Car(vehicle_type,licence_plate,rate, self.email)
+                uber.add_veichle(new_vehicle)
+            elif vehicle_type == 'bike':
+                new_vehicle = Bike(vehicle_type,licence_plate,rate, self.email)
+                uber.add_veichle(new_vehicle)
+            else:
+                new_vehicle = Cng(vehicle_type,licence_plate,rate, self.email)
+                uber.add_veichle(new_vehicle)
+        else:
+            print("invalid driver")
 
     def start_trip(self, destination,fare):
         self.earning += fare

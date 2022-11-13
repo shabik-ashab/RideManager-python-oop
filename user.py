@@ -1,4 +1,5 @@
 import hashlib
+from random import randint
 
 from brta import BRTA
 from vehicle import Car, Cng, Bike
@@ -6,14 +7,24 @@ from ride_manager import uber
 
 license_authority = BRTA()
 
+class UserAlreadyExist(Exception):
+    def __init__(self,email, *args: object) -> None:
+        print(f'User: {email} already exists.')
+        super().__init__(*args)
+
 
 class User:
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
         pwd_encrypted = hashlib.md5(password.encode()).hexdigest()
-        with open('users.txt', 'w') as file:
-            file.write(f"{email} {pwd_encrypted}")
+        with open ('users.txt', 'r') as file:
+            if email in file.read():
+                raise UserAlreadyExist(email)
+        file.close()
+
+        with open('users.txt', 'a') as file:
+            file.write(f"{email} {pwd_encrypted}\n")
         file.close()
         print(self.name, 'user created')
 
@@ -89,13 +100,13 @@ class Driver(User):
         self.location = destination
 
 
-rider1 = Rider('rider1', 'rider@mail.com', 'rider1', 55, 4000)
+rider1 = Rider('rider1', 'rider@mail.com', 'rider1', randint(0,60), 4000)
 
-driver1 = Driver('d1', 'd1@mail.com', 'd1', 44,3445)
+driver1 = Driver('d1', 'd1@mail.com', 'd1', randint(0,60),3445)
 driver1.take_driving_test()
 driver1.register_vehicle('car', 1245, 10)
 
-driver2 = Driver('d2', 'd2@mail.com', 'd2', 43,3445)
+driver2 = Driver('d2', 'd2@mail.com', 'd2', randint(0,60),3445)
 driver2.take_driving_test()
 driver2.register_vehicle('car', 2344,12)
 

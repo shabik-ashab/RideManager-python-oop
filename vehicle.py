@@ -9,7 +9,7 @@ class Vehicle:
     def __init__(self, vechile_type,licence_plate,rate,owner) -> None:
         self.vechile_type = vechile_type
         self.rate = rate
-        self.driver = owner
+        self.owner = owner
         self.licence_plate = licence_plate
         self.status = 'avilable'
         self.speed = self.speed[vechile_type]

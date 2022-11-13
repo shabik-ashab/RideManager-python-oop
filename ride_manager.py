@@ -17,8 +17,15 @@ class RideManager:
     def get_avilable_cars(self):
         return self.__avilable_cars
 
-    def match_veichle(self):
-        pass
+    def find_veichle(self,rider,vehicle_type,destination):
+        if vehicle_type == 'car':
+            if(len(self.__avilable_cars) == 0):
+                print('No cars avilable')
+                return False
+            for car in self.__avilable_cars:
+                print(rider.location, car.owner.location)
+                if abs(rider.location - car.owner.location) < 30:
+                    print('find a match')
 
 
 uber = RideManager()

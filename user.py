@@ -71,15 +71,15 @@ class Driver(User):
         if self.valid_driver:
             if vehicle_type == 'car':
                 new_vehicle = Car(
-                    vehicle_type, licence_plate, rate, self.email)
+                    vehicle_type, licence_plate, rate, self)
                 uber.add_vehicle(vehicle_type,new_vehicle)
             elif vehicle_type == 'bike':
                 new_vehicle = Bike(
-                    vehicle_type, licence_plate, rate, self.email)
+                    vehicle_type, licence_plate, rate, self)
                 uber.add_vehicle(vehicle_type, new_vehicle)
             else:
                 new_vehicle = Cng(
-                    vehicle_type, licence_plate, rate, self.email)
+                    vehicle_type, licence_plate, rate, self)
                 uber.add_vehicle(vehicle_type,new_vehicle)
         else:
             print("invalid driver")
@@ -93,10 +93,12 @@ rider1 = Rider('rider1', 'rider@mail.com', 'rider1', 55, 4000)
 
 driver1 = Driver('d1', 'd1@mail.com', 'd1', 44,3445)
 driver1.take_driving_test()
-
 driver1.register_vehicle('car', 1245, 10)
 
 driver2 = Driver('d2', 'd2@mail.com', 'd2', 43,3445)
-
 driver2.take_driving_test()
+driver2.register_vehicle('car', 2344,12)
+
 print(uber.get_avilable_cars())
+
+uber.find_veichle(rider1,'car', 90)

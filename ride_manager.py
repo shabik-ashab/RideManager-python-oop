@@ -19,7 +19,11 @@ class RideManager:
     def get_avilable_cars(self):
         return self.__avilable_cars
 
+    def total_income(self):
+        return self.__income
     
+    def trip_history(self):
+        return self.__trip_history
 
     def find_veichle(self,rider,vehicle_type,destination):
         if vehicle_type == 'car':

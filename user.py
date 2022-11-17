@@ -1,5 +1,6 @@
 import hashlib
-from random import randint
+from random import randint, choice
+import threading
 
 from brta import BRTA
 from vehicle import Car, Cng, Bike
@@ -116,8 +117,14 @@ class Driver(User):
     def start_trip(self,start, destination, fare, trip_info):
         self.earning += fare
         self.location = destination
-        self.vehicle.start_driving(start, destination)
+        # start a thrad
+        trip_thread = threading.Thread(target=self.vehicle.start_driving, args=(start,destination))
+        trip_thread.start()
+        # self.vehicle.start_driving(start, destination)
         self.__trip_history.append(trip_info)
+
+
+vehicle_types = ['bike','cng','car']
 
 
 rider1 = Rider('rider1', 'rider@mail.com', 'rider1', randint(0,60), 4000)
@@ -127,18 +134,18 @@ rider3 = Rider('rider3', 'ride3@mail.com', 'rider3', randint(0,60), 4000)
 for i in range(1,100):
     driver1 = Driver(f'd{i}', f'd{i}@mail.com', f'd{i}', randint(0,60),randint(5555,9999))
     driver1.take_driving_test()
-    driver1.register_vehicle('car', randint(11111,99999), randint(10,20))
+    driver1.register_vehicle(choice(vehicle_types), randint(11111,99999), randint(10,20))
 
 # driver1 = Driver('d1', 'd1@mail.com', 'd1', randint(0,60),3445)
 # driver1.take_driving_test()
 # driver1.register_vehicle('car', 1245, 10)
 
 print(len(uber.get_avilable_cars()))
-uber.find_veichle(rider1,'car', randint(1,100))
-uber.find_veichle(rider2,'car', randint(1,100))
-uber.find_veichle(rider3,'car', randint(1,100))
+uber.find_veichle(rider1,choice(vehicle_types), randint(1,100))
+uber.find_veichle(rider2,choice(vehicle_types), randint(1,100))
+uber.find_veichle(rider3,choice(vehicle_types), randint(1,100))
 # uber.find_veichle(rider1,'car', randint(1,100))
 # uber.find_veichle(rider1,'car', randint(1,100))
 
-# print(rider1.get_trip_history())
-# print(uber.total_income())
+print(rider1.get_trip_history())
+print(uber.total_income())

@@ -27,32 +27,39 @@ class RideManager:
 
     def find_veichle(self,rider,vehicle_type,destination):
         if vehicle_type == 'car':
-            if(len(self.__avilable_cars) == 0):
-                print('No cars avilable')
-                return False
-            for car in self.__avilable_cars:
-                if abs(rider.location - car.owner.location) < 30:
-                    distance = abs(rider.location - destination)
-                    fare = distance * car.rate
+            vehicles = self.__avilable_cars
+        elif vehicle_type == 'bike':
+            vehicles = self.__avilable_bikes
+        else:
+            vehicles = self.__avilable_cng 
 
-                    if rider.balance < fare:
-                        print('you do not have enough money')
-                        return False
+        if(len(vehicles) == 0):
+            print('No cars avilable')
+            return False
+            
+        for vehicle in vehicles:
+            if abs(rider.location - vehicle.owner.location) < 30:
+                distance = abs(rider.location - destination)
+                fare = distance * vehicle.rate
 
-                    if car.status == 'avilable':
-                        car.status = 'unavilable'
-                        self.__avilable_cars.remove(car) 
+                if rider.balance < fare:
+                    print('you do not have enough money')
+                    return False
 
-                        trip_info = f"find a match for {rider.name} for fare: {fare} with {car.owner.name} started: {rider.location} to: {destination}"
-                        rider.start_trip(fare, trip_info)
-                        car.owner.start_trip(rider.location,destination, fare*0.8, trip_info)
+                if vehicle.status == 'avilable':
+                    vehicle.status = 'unavilable'
+                    vehicles.remove(vehicle) 
 
-                        self.__income += fare*0.20
-                        print(rider.location, car.owner.location, ' -> ', destination)
-                        
-                        self.__trip_history.append(trip_info)
-                        print(trip_info)
-                        return True 
+                    trip_info = f"Match {vehicle_type} for {rider.name} for fare: {fare} with {vehicle.owner.name} started: {rider.location} to: {destination}"
+                    print(trip_info)
+                    rider.start_trip(fare, trip_info)
+                    vehicle.owner.start_trip(rider.location,destination, fare*0.8, trip_info)
+
+                    self.__income += fare*0.20
+                    print(rider.location, vehicle.owner.location, ' -> ', destination)
+                    
+                    self.__trip_history.append(trip_info)
+                    return True 
 
 
 uber = RideManager()

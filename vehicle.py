@@ -34,7 +34,7 @@ class Car(Vehicle):
         distance = abs(start - destination)
         for i in range(0,distance):
             sleep(0.5)
-            print(f"Driving: {self.licence_plate} curr position: {i} of {distance}")
+            print(f"Driving: {self.licence_plate} curr position: {i} of {distance} \n")
         self.trip_finished()
 
     def trip_finished(self):
@@ -46,9 +46,14 @@ class Bike(Vehicle):
     def __init__(self, vechile_type, licence_plate, rate, owner) -> None:
         super().__init__(vechile_type, licence_plate, rate, owner)
 
-    def start_driving(self):
+    def start_driving(self, start, destination):
         self.status = 'unavilable'
         print(self.vechile_type,self.licence_plate,'started')
+        distance = abs(start - destination)
+        for i in range(0,distance):
+            sleep(0.5)
+            print(f"Driving: {self.licence_plate} curr position: {i} of {distance} \n")
+        self.trip_finished()
 
     def trip_finished(self):
         self.status = 'avilable'
@@ -59,9 +64,14 @@ class Cng(Vehicle):
     def __init__(self, vechile_type, licence_plate, rate, owner) -> None:
         super().__init__(vechile_type, licence_plate, rate, owner)
 
-    def start_driving(self):
+    def start_driving(self, start, destination):
         self.status = 'unavilable'
         print(self.vechile_type,self.licence_plate,'started')
+        distance = abs(start - destination)
+        for i in range(0, distance):
+            sleep(0.5)
+            print(f"Driving: {self.licence_plate} curr position: {i} of {distance} \n")
+        self.trip_finished()
 
     def trip_finished(self):
         self.status = 'avilable'

@@ -54,6 +54,7 @@ class Rider(User):
     def __init__(self, name, email, password, location, balance):
         self.location = location
         self.balance = balance
+        self.__trip_history = []
         super().__init__(name, email, password)
 
     def set_location(self, location):
@@ -65,9 +66,13 @@ class Rider(User):
     def request_trip(self, destination):
         pass
 
-    def start_trip(self, fare, trip_history):
+    def get_trip_history(self):
+        return self.__trip_history
+
+    def start_trip(self, fare, trip_info):
+        print(f"trip started for {self.name}")
         self.balance -= fare
-        self.__trip_history.append(trip_history)
+        self.__trip_history.append(trip_info)
 
 
 class Driver(User):
@@ -78,6 +83,7 @@ class Driver(User):
         self.__trip_history = []
         self.valid_driver = license_authority.validate_licence(email, license)
         self.earning = 0
+        self.vehicle = None
 
     def take_driving_test(self):
         res = license_authority.driving_test(self.email)
@@ -88,28 +94,35 @@ class Driver(User):
     def register_vehicle(self, vehicle_type, licence_plate, rate):
         if self.valid_driver:
             if vehicle_type == 'car':
-                new_vehicle = Car(
+                self.vehicle = Car(
                     vehicle_type, licence_plate, rate, self)
-                uber.add_vehicle(vehicle_type,new_vehicle)
+                uber.add_vehicle(vehicle_type,self.vehicle)
             elif vehicle_type == 'bike':
-                new_vehicle = Bike(
+                self.vehicle = Bike(
                     vehicle_type, licence_plate, rate, self)
-                uber.add_vehicle(vehicle_type, new_vehicle)
+                uber.add_vehicle(vehicle_type, self.vehicle)
             else:
-                new_vehicle = Cng(
+                self.vehicle = Cng(
                     vehicle_type, licence_plate, rate, self)
-                uber.add_vehicle(vehicle_type,new_vehicle)
+                uber.add_vehicle(vehicle_type,self.vehicle)
         else:
             # print("invalid driver")
             pass
 
-    def start_trip(self, destination, fare, trip_history):
+
+    def get_trip_history(self):
+        return self.__trip_history
+
+    def start_trip(self,start, destination, fare, trip_info):
         self.earning += fare
         self.location = destination
-        self.__trip_history.append(trip_history)
+        self.vehicle.start_driving(start, destination)
+        self.__trip_history.append(trip_info)
 
 
 rider1 = Rider('rider1', 'rider@mail.com', 'rider1', randint(0,60), 4000)
+rider2 = Rider('rider2', 'rider2@mail.com', 'rider2', randint(0,60), 4000)
+rider3 = Rider('rider3', 'ride3@mail.com', 'rider3', randint(0,60), 4000)
 
 for i in range(1,100):
     driver1 = Driver(f'd{i}', f'd{i}@mail.com', f'd{i}', randint(0,60),randint(5555,9999))
@@ -122,3 +135,10 @@ for i in range(1,100):
 
 print(len(uber.get_avilable_cars()))
 uber.find_veichle(rider1,'car', randint(1,100))
+uber.find_veichle(rider2,'car', randint(1,100))
+uber.find_veichle(rider3,'car', randint(1,100))
+# uber.find_veichle(rider1,'car', randint(1,100))
+# uber.find_veichle(rider1,'car', randint(1,100))
+
+# print(rider1.get_trip_history())
+# print(uber.total_income())

@@ -45,7 +45,7 @@ class RideManager:
 
                         trip_info = f"find a match for {rider.name} for fare: {fare} with {car.owner.name} started: {rider.location} to: {destination}"
                         rider.start_trip(fare, trip_info)
-                        car.owner.start_trip(destination, fare*0.8, trip_info)
+                        car.owner.start_trip(rider.location,destination, fare*0.8, trip_info)
 
                         self.__income += fare*0.20
                         print(rider.location, car.owner.location, ' -> ', destination)

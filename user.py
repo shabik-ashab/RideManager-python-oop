@@ -17,6 +17,7 @@ class User:
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
+        self.__trip_history = []
         pwd_encrypted = hashlib.md5(password.encode()).hexdigest()
         already_exist = False
         with open ('users.txt', 'r') as file:
@@ -64,9 +65,9 @@ class Rider(User):
     def request_trip(self, destination):
         pass
 
-    def start_trip(self,destination, fare):
+    def start_trip(self, fare, trip_history):
         self.balance -= fare
-        self.location = destination
+        self.__trip_history.append(trip_history)
 
 
 class Driver(User):
@@ -74,6 +75,7 @@ class Driver(User):
         super().__init__(name, email, password)
         self.location = location
         self.license = license
+        self.__trip_history = []
         self.valid_driver = license_authority.validate_licence(email, license)
         self.earning = 0
 
@@ -101,9 +103,10 @@ class Driver(User):
             # print("invalid driver")
             pass
 
-    def start_trip(self, destination, fare):
+    def start_trip(self, destination, fare, trip_history):
         self.earning += fare
         self.location = destination
+        self.__trip_history.append(trip_history)
 
 
 rider1 = Rider('rider1', 'rider@mail.com', 'rider1', randint(0,60), 4000)

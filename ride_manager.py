@@ -43,13 +43,13 @@ class RideManager:
                         car.status = 'unavilable'
                         self.__avilable_cars.remove(car) 
 
-                        rider.start_trip(destination, fare)
-                        car.owner.start_trip(destination, fare*0.8)
+                        trip_info = f"find a match for {rider.name} for fare: {fare} with {car.owner.name} started: {rider.location} to: {destination}"
+                        rider.start_trip(fare, trip_info)
+                        car.owner.start_trip(destination, fare*0.8, trip_info)
 
                         self.__income += fare*0.20
                         print(rider.location, car.owner.location, ' -> ', destination)
                         
-                        trip_info = f"find a match for {rider.name} for fare: {fare} with {car.owner.name} started: {rider.location} to: {destination}"
                         self.__trip_history.append(trip_info)
                         print(trip_info)
                         return True 

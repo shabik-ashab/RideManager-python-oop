@@ -18,15 +18,19 @@ class User:
         self.name = name
         self.email = email
         pwd_encrypted = hashlib.md5(password.encode()).hexdigest()
+        already_exist = False
         with open ('users.txt', 'r') as file:
             if email in file.read():
-                raise UserAlreadyExist(email)
+                already_exist = True
+                # raise UserAlreadyExist(email)
         file.close()
 
-        with open('users.txt', 'a') as file:
-            file.write(f"{email} {pwd_encrypted}\n")
-        file.close()
-        print(self.name, 'user created')
+        if already_exist == False:
+            with open('users.txt', 'a') as file:
+                file.write(f"{email} {pwd_encrypted}\n")
+            file.close()
+
+        # print(self.name, 'user created')
 
     @staticmethod
     def log_in(email, password):
@@ -60,8 +64,9 @@ class Rider(User):
     def request_trip(self, destination):
         pass
 
-    def start_trip(self, fare):
+    def start_trip(self,destination, fare):
         self.balance -= fare
+        self.location = destination
 
 
 class Driver(User):
@@ -93,7 +98,8 @@ class Driver(User):
                     vehicle_type, licence_plate, rate, self)
                 uber.add_vehicle(vehicle_type,new_vehicle)
         else:
-            print("invalid driver")
+            # print("invalid driver")
+            pass
 
     def start_trip(self, destination, fare):
         self.earning += fare
@@ -102,14 +108,14 @@ class Driver(User):
 
 rider1 = Rider('rider1', 'rider@mail.com', 'rider1', randint(0,60), 4000)
 
-driver1 = Driver('d1', 'd1@mail.com', 'd1', randint(0,60),3445)
-driver1.take_driving_test()
-driver1.register_vehicle('car', 1245, 10)
+for i in range(1,100):
+    driver1 = Driver(f'd{i}', f'd{i}@mail.com', f'd{i}', randint(0,60),randint(5555,9999))
+    driver1.take_driving_test()
+    driver1.register_vehicle('car', randint(11111,99999), randint(10,20))
 
-driver2 = Driver('d2', 'd2@mail.com', 'd2', randint(0,60),3445)
-driver2.take_driving_test()
-driver2.register_vehicle('car', 2344,12)
+# driver1 = Driver('d1', 'd1@mail.com', 'd1', randint(0,60),3445)
+# driver1.take_driving_test()
+# driver1.register_vehicle('car', 1245, 10)
 
-print(uber.get_avilable_cars())
-
-uber.find_veichle(rider1,'car', 90)
+print(len(uber.get_avilable_cars()))
+uber.find_veichle(rider1,'car', randint(1,100))
